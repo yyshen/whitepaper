@@ -3,4 +3,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 # Request review from Gernot by default
-@gernotheiser
+*          @gernotheiser
+
+# CI setup
+/.github/  @lsf37
