@@ -53,14 +53,16 @@ The full text of the declaration is at <https://developercertificate.org>.
 
 The paper build should work on Linux and MacOs systems.
 
-You will need the `tex-live` package installed. With that, simply
+You will need the packages `texlive-latex-extra` and `texlive-fonts-extra`
+installed. With that, simply
 
     make
 
 should produce the file `whitepaper.pdf`.
 
 The file `references.bib` is generated from a larger database not included in
-this repository, but the paper should build fine without this database.
+this repository, but the paper should build fine without this database. If
+`make` asks you if you want to regenerate the file, it is safe to say no.
 
 
 ## Contact
