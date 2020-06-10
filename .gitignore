@@ -1,0 +1,25 @@
+# generated files
+# Note: Do NOT include references.bib here, this should be committed once generated
+
+whitepaper.pdf
+
+*~
+*.aux
+*.dvi
+*.bbl
+*.blg
+*.brf
+*.out
+*.idx
+*.ps
+*.to?
+*.diff
+*.rel
+*.com
+*.cut
+*.log
+*-diff.tex
+*.sw[po]
+*.orig
+tmp.bib
+.DS_Store

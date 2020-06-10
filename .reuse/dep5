@@ -1,0 +1,12 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: seL4/whitepaper
+Upstream-Contact:  Gernot Heiser <gernot@sel4.systems>
+Source: https://github.com/seL4/whitepaper
+
+Files: imgs/*.pdf imgs/figs.pptx
+Copyright: 2020, Data61, CSIRO (ABN 41 687 119 230)
+License: CC-BY-SA-4.0
+
+Files: references.bib
+Copyright: 2020, Data61, CSIRO (ABN 41 687 119 230)
+License: CC-BY-SA-4.0
