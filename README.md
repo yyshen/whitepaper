@@ -11,6 +11,15 @@ This repository contains the [LaTeX][1] sources of the seL4 white paper.
 The latest released PDF version of the white paper is available from
 <https://sel4.systems/About/seL4-whitepaper.pdf>
 
+**From the paper:**
+This whitepaper provides an introduction to and overview of seL4. We explain
+what seL4 is (and is not) and explore its defining features. We explain what
+makes seL4 uniquely qualified as the operating-system kernel of choice for
+security- and safety-critical systems, and generally embedded and
+cyber-physical systems. In particular, we explain seL4's assurance story, its
+security- and safety-relevant features, and its benchmark-setting
+performance. We also discuss typical usage scenarios, including incremental
+cyber retrofit of legacy systems.
 
 ## Contributions
 
