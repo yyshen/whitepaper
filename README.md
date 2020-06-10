@@ -56,8 +56,8 @@ this repository, but the paper should build fine without this database.
 
 ## Contact
 
-@gernotheiser is the main author of the paper, please contact him for any
-queries on this paper at <gernot.heiser@seL4.systems>.
+Gernot Heiser is the main author of the paper, please contact him for any
+queries on this paper at <gernot@seL4.systems>.
 
 
 ## License
