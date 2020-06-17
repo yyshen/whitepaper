@@ -3,7 +3,23 @@ Upstream-Name: seL4/whitepaper
 Upstream-Contact:  Gernot Heiser <gernot@sel4.systems>
 Source: https://github.com/seL4/whitepaper
 
-Files: imgs/*.pdf imgs/figs.pptx
+Files:
+  imgs/binary.pdf
+  imgs/blacktriangle.pdf
+  imgs/camkes.pdf
+  imgs/cap.pdf
+  imgs/capdl.pdf
+  imgs/chilli.pdf
+  imgs/deputy.pdf
+  imgs/figs.pptx
+  imgs/hacms.pdf
+  imgs/hypervisor.pdf
+  imgs/kernel.pdf
+  imgs/l4family.pdf
+  imgs/mcs.pdf
+  imgs/proofs.pdf
+  imgs/seL4-key.pdf
+  imgs/vmm.pdf
 Copyright: 2020, Data61, CSIRO (ABN 41 687 119 230)
 License: CC-BY-SA-4.0
 
