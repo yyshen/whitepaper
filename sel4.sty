@@ -102,18 +102,27 @@
 \def\thedate{\value\@date}
 \def\thanks{\undefined}
 \newcommand{\subtitle}[1]{\def\@subtitle{#1}}
-\newcommand{\Logo@FileName}{imgs/logos/seL4-Foundation-logo.pdf}
-\newcommand{\Triang@FileName}{imgs/blacktriangle.pdf}
-\newcommand{\Key@FileName}{imgs/seL4-key.pdf}
+\newcommand{\Logo@FileName}{logos/seL4-Foundation-logo.pdf}
+\newcommand{\Triang@FileName}{logos/blacktriangle.pdf}
+\newcommand{\Key@FileName}{logos/seL4-key.pdf}
 \newcommand{\L@ogo}{\includegraphics[keepaspectratio=true,height=23mm]{\Logo@FileName}}
 \newcommand{\K@ey}{\includegraphics[keepaspectratio=true,width=1.04\paperwidth]{\Key@FileName}}
 
-\newcommand{\doCopyright}[1][\the\year]{
-  Copyright \copyright~#1 seL4 Project a Series of LF Projects, LLC.\\
-  Distributed under the
-  \href{https://creativecommons.org/licenses/by-sa/4.0/legalcode}{Creative
-    Commons Attribution-ShareAlike 4.0 International (CC~BY-SA~4.0) License.}\\
-  seL4 is a trademark of LF Projects, LLC.
+%%% Produces copyright notice as a pseudo footnote without a footnote mark
+% Use it right at the top. The optional argument is the year of the
+% copyright, it defaults to the current year.
+\newcommand{\doCopyright}[1][\the\year]{%
+  \let\s@makefnmark=\@makefnmark%
+  \def\@makefnmark{}%
+  \footnotetext{%
+    \hspace*{-1.8em}%    Magic number from article.cls/report.cls
+    Copyright \copyright~#1 seL4 Project a Series of LF Projects, LLC.\\
+    Distributed under the
+    \href{https://creativecommons.org/licenses/by-sa/4.0/legalcode}{Creative
+      Commons Attribution-ShareAlike 4.0 International (CC~BY-SA~4.0) License.}\\
+    seL4 is a trademark of LF Projects, LLC.
+  }
+  \let\@makefnmark=\s@makefnmark%
 }
 
 
@@ -134,20 +143,28 @@
     \let\footnoterule\relax
     \let \footnote \thanks
     % laying out the background
-    \newlength{\img@raise}
+    \newlength{\img@raise}%
+    \newlength{\img@shift}%
     % the black triangle
     \setlength{\img@raise}{-\paperheight}%
     \addtolength{\img@raise}{\Gm@tmargin}%
-    \addtolength{\img@raise}{4mm}% don't ask me why!
+%    \addtolength{\img@raise}{4mm}% don't ask me why!
+    \addtolength{\img@raise}{4.2mm}% don't ask me why!
+    \setlength{\img@shift}{-\Gm@lmargin}%
+    % make black triangle extend 0.1mm beyond margins to prevent a white line
+    \newlength{\img@width}\setlength{\img@width}{\paperwidth}%
+    \newlength{\img@height}\setlength{\img@height}{\paperheight}%
+    \addtolength{\img@width}{0.2mm}\addtolength{\img@shift}{-0.1mm}%
+    \addtolength{\img@height}{0.3mm}\addtolength{\img@raise}{-0.15mm}%
 %    \typeout{paperheight=\the\paperheight,
 %      paperwidth=\the\paperwidth,
 %      Gm@lmargin=\Gm@lmargin,
 %      Gm@tmargin=\Gm@tmargin,
 %      img@raise=\the\img@raise,
 %      hfuzz=\the\hfuzz}
-    \raisebox{\img@raise}[0pt][0pt]{\hspace*{-\Gm@lmargin}%
+    \raisebox{\img@raise}[0pt][0pt]{\hspace*{\img@shift}%
       \makebox[0pt][l]{%
-        \includegraphics[keepaspectratio=false,width=\paperwidth,height=\paperheight]{\Triang@FileName}%
+        \includegraphics[keepaspectratio=false,width=\img@width,height=\img@height]{\Triang@FileName}%
       }%
     }
     % header
