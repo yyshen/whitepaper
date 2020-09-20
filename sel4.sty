@@ -2,7 +2,7 @@
 % SPDX-License-Identifier: CC-BY-SA-4.0
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{sel4}[2020/09/20 v0.6 seL4 Foundation letterhead and title page]
+\ProvidesPackage{sel4}[2020/09/20 v0.7 seL4 Foundation letterhead and title page]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Letterhead and title page for the seL4 Foundation
@@ -22,16 +22,12 @@
 %        \date			Date of document, default \today, ignored if title is empty
 %        \header			Organisation/originator to go in TRHS of header, multiple lines
 %					default: seL4 Foundation
-%        \url			Org URL, default: seL4 Foundation URL
+%        \theurl			Org URL, default: seL4 Foundation URL
 %        \copyYear		Year of copyright (default: this year)
 %     - OUTPUTS:
 %        \doCopyright	Produces the copyright notice
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%   To Do:
-%   - test \header, \url
-%   - proper stacking of header
 
 \newif\ifb@nner\b@nnertrue
 
@@ -92,6 +88,7 @@
 \def\@docversion{}
 \def\@date{\today}
 \def\header#1{\def\h@eader{#1}}
+\def\theurl#1{\def\u@rl{#1}}
 \def\title#1{\def\@title{#1}}
 \def\author#1{\def\@author{#1}}
 \def\authortitle#1{\def\@authortitle{#1}}
@@ -128,6 +125,27 @@
 
 %% the main thing: \maketitle produces the letterhead
 
+\def\m@akeheader{%
+  \begin{minipage}[b]{\paperwidth}%
+    \hspace*{16mm}%
+    \raisebox{2.5mm}[38mm][0mm]{\L@ogo}%
+    \hfill
+    \raisebox{4mm}{%
+      \footnotesize%
+      \textcolor{greenLogo}{
+        \begin{tabular}[b]{r}\bf
+          \raisebox{0pt}[0pt][10mm]{\rule{0pt}{8mm}}%
+          \begin{tabular}[t]{r@{}}
+            \h@eader
+          \end{tabular}\\
+          % force URL colour to be green or black, irrespective of hyperref setup
+          \bf\href{\u@rl}{\textcolor{greenLogo}\u@rl}
+        \end{tabular}
+      }%
+    }\hspace*{5mm}
+  \end{minipage}%
+}%
+
 \if@titlepage
 \renewcommand\maketitle{%
   \typeout{Starting \protect\maketitle}
@@ -148,7 +166,6 @@
     % the black triangle
     \setlength{\img@raise}{-\paperheight}%
     \addtolength{\img@raise}{\Gm@tmargin}%
-%    \addtolength{\img@raise}{4mm}% don't ask me why!
     \addtolength{\img@raise}{4.2mm}% don't ask me why!
     \setlength{\img@shift}{-\Gm@lmargin}%
     % make black triangle extend 0.1mm beyond margins to prevent a white line
@@ -169,30 +186,7 @@
     }
     % header
     \raisebox{4mm}[0pt][0pt]{\hspace*{-\Gm@tmargin}%
-      \begin{minipage}[b]{\paperwidth}%
-        \hspace*{22mm}%
-        \raisebox{2.5mm}[38mm][0mm]{\L@ogo}%
-        \hfill
-        \raisebox{4mm}{%
-          \footnotesize%
-          \textcolor{greenLogo}{
-            \begin{tabular}[b]{r}\bf
-              \h@eader\\
-              % force URL colour to be green or black, irrespective of hyperref setup
-              \bf\href{\u@rl}{\textcolor{\ifb@nner greenLogo\else black\fi}\u@rl}
-            \end{tabular}
-          }
-        }\hspace*{5mm}
-        % key
-        \setlength{\img@raise}{-\paperheight}%
-        \addtolength{\img@raise}{\Gm@tmargin}%
-        \addtolength{\img@raise}{-4mm}% don't ask me why!
-        \raisebox{\img@raise}[0pt][0pt]{%
-          \makebox[0pt][r]{%
-            \K@ey%
-          }%
-        }%
-      \end{minipage}%
+      \m@akeheader
     }%
     %
     \null%\vfil
@@ -259,21 +253,28 @@
   \noindent%
   \raisebox{0mm}[0pt][0pt]{\hspace*{-25mm}%
     \ifb@nner\makebox[0pt][l]{\rule{\paperwidth}{40mm}}\fi% black banner
+\iftrue
+    \m@akeheader
+\else
     \begin{minipage}[b]{\paperwidth}%
       \hspace*{16mm}%
       \raisebox{2.5mm}[38mm][0mm]{\L@ogo}%
       \hfill
       \raisebox{4mm}{%
         \footnotesize%
-        \textcolor{\ifb@nner greenLogo\else black\fi}{
+        \textcolor{greenLogo}{
           \begin{tabular}[b]{r}\bf
-            \h@eader\\
+            \raisebox{0pt}[0pt][10mm]{\rule{0pt}{8mm}}%
+            \begin{tabular}[t]{r@{}}
+              \h@eader
+            \end{tabular}\\
             % force URL colour to be green or black, irrespective of hyperref setup
-            \bf\href{\u@rl}{\textcolor{\ifb@nner greenLogo\else black\fi}\u@rl}
+            \bf\href{\u@rl}{\textcolor{greenLogo}\u@rl}
           \end{tabular}
-        }
+        }%
       }\hspace*{5mm}
     \end{minipage}%
+\fi
   }%
   % reset overfull rule
   \setlength{\overfullrule}{\saveOverfullRule}%
