@@ -2,7 +2,7 @@
 % SPDX-License-Identifier: CC-BY-SA-4.0
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{sel4}[2020/09/20 v0.7 seL4 Foundation letterhead and title page]
+\ProvidesPackage{sel4}[2020/09/23 v0.8 seL4 Foundation letterhead and title page]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Letterhead and title page for the seL4 Foundation
@@ -17,15 +17,22 @@
 %
 %   COMMANDS:
 %     - INPUTS:
-%        \title			Document title in header, default: none
+%        \title			Document title in header, default: none 
+%        \subtitle		Document subtitle title in header, ignored if title is empty
 %        \author			Document author, ignored if title is empty
+%        \authortitle           Title of author, ignored if author is empty
+%        \email                   Contact email, ignored if author is empty
+%        \docversion          Document version
 %        \date			Date of document, default \today, ignored if title is empty
 %        \header			Organisation/originator to go in TRHS of header, multiple lines
-%					default: seL4 Foundation
+%					default: "The seL4 Foundation"
 %        \theurl			Org URL, default: seL4 Foundation URL
 %        \copyYear		Year of copyright (default: this year)
 %     - OUTPUTS:
-%        \doCopyright	Produces the copyright notice
+%        \doCopyright	Produces the copyright notice, must be placed
+%                                      right after \maketitle
+%        \thedocversion      Document version string
+%        \thedate                Date string
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,13 +53,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[sfdefault]{roboto}
 \RequirePackage{xcolor}
-% \RequirePackage[datesep=-,style=iso]{datetime2}
 \RequirePackage[iso]{isodate}
 
 \if@titlepage
-\typeout{have titlepage}
+\typeout{sel4 style with titlepage}
 \else
-\typeout{no titlepage}
+\typeout{sel4 style without titlepage}
 \fi
 
 %% Foundation colour scheme:
@@ -90,6 +96,7 @@
 \def\header#1{\def\h@eader{#1}}
 \def\theurl#1{\def\u@rl{#1}}
 \def\title#1{\def\@title{#1}}
+\def\subtitle#1{\def\@subtitle{#1}}
 \def\author#1{\def\@author{#1}}
 \def\authortitle#1{\def\@authortitle{#1}}
 \def\email#1{\def\@email{#1}}
@@ -98,7 +105,6 @@
 \def\date#1{\def\@date{#1}}
 \def\thedate{\value\@date}
 \def\thanks{\undefined}
-\newcommand{\subtitle}[1]{\def\@subtitle{#1}}
 \newcommand{\Logo@FileName}{logos/seL4-Foundation-logo.pdf}
 \newcommand{\Triang@FileName}{logos/blacktriangle.pdf}
 \newcommand{\Key@FileName}{logos/seL4-key.pdf}
@@ -106,7 +112,7 @@
 \newcommand{\K@ey}{\includegraphics[keepaspectratio=true,width=1.04\paperwidth]{\Key@FileName}}
 
 %%% Produces copyright notice as a pseudo footnote without a footnote mark
-% Use it right at the top. The optional argument is the year of the
+% Use it right at the top, or just after \maketitle. The optional argument is the year of the
 % copyright, it defaults to the current year.
 \newcommand{\doCopyright}[1][\the\year]{%
   \let\s@makefnmark=\@makefnmark%
@@ -123,8 +129,7 @@
 }
 
 
-%% the main thing: \maketitle produces the letterhead
-
+%% the part of the headers that's common with or without titlepage
 \def\m@akeheader{%
   \begin{minipage}[b]{\paperwidth}%
     \hspace*{16mm}%
@@ -146,9 +151,9 @@
   \end{minipage}%
 }%
 
+%% the main thing: \maketitle produces the letterhead
 \if@titlepage
 \renewcommand\maketitle{%
-  \typeout{Starting \protect\maketitle}
   \noindent%
   \begin{titlepage}%
     \urlstyle{sf}
@@ -169,10 +174,9 @@
     \addtolength{\img@raise}{4.2mm}% don't ask me why!
     \setlength{\img@shift}{-\Gm@lmargin}%
     % make black triangle extend 0.1mm beyond margins to prevent a white line
-    \newlength{\img@width}\setlength{\img@width}{\paperwidth}%
-    \newlength{\img@height}\setlength{\img@height}{\paperheight}%
-    \addtolength{\img@width}{0.2mm}\addtolength{\img@shift}{-0.1mm}%
-    \addtolength{\img@height}{0.3mm}\addtolength{\img@raise}{-0.15mm}%
+    \newlength{\img@width}\setlength{\img@width}{1.001\paperwidth}%
+    \newlength{\img@height}\setlength{\img@height}{1.001\paperheight}%
+    \addtolength{\img@shift}{-0.0005\paperwidth}\addtolength{\img@raise}{-0.0005\paperheight}%
 %    \typeout{paperheight=\the\paperheight,
 %      paperwidth=\the\paperwidth,
 %      Gm@lmargin=\Gm@lmargin,
@@ -190,7 +194,6 @@
     }%
     %
     \null%\vfil
-    % \vskip 60\p@
     \raggedright% to prevent stuff shifting
     \vskip 50mm%
     ~\hfill%
@@ -241,7 +244,6 @@
   \global\let\date\relax
   \global\let\and\relax
   \setcounter{page}{0}
-  \typeout{Finish \protect\maketitle}
 }
 \else% no titlepage
 \def\maketitle{\urlstyle{sf}
@@ -253,38 +255,22 @@
   \noindent%
   \raisebox{0mm}[0pt][0pt]{\hspace*{-25mm}%
     \ifb@nner\makebox[0pt][l]{\rule{\paperwidth}{40mm}}\fi% black banner
-\iftrue
     \m@akeheader
-\else
-    \begin{minipage}[b]{\paperwidth}%
-      \hspace*{16mm}%
-      \raisebox{2.5mm}[38mm][0mm]{\L@ogo}%
-      \hfill
-      \raisebox{4mm}{%
-        \footnotesize%
-        \textcolor{greenLogo}{
-          \begin{tabular}[b]{r}\bf
-            \raisebox{0pt}[0pt][10mm]{\rule{0pt}{8mm}}%
-            \begin{tabular}[t]{r@{}}
-              \h@eader
-            \end{tabular}\\
-            % force URL colour to be green or black, irrespective of hyperref setup
-            \bf\href{\u@rl}{\textcolor{greenLogo}\u@rl}
-          \end{tabular}
-        }%
-      }\hspace*{5mm}
-    \end{minipage}%
-\fi
   }%
   % reset overfull rule
   \setlength{\overfullrule}{\saveOverfullRule}%
-%  \@maketitle
   \vspace*{12mm}%
   \ifx\@title\empty \else%
     \begin{center}
       {\LARGE\bf\@title\\[1ex]}
       \ifx\@subtitle\empty \else{\Large\@subtitle} \\[1ex]\fi%
-      \ifx\@author\empty \else{\Large\@author\\[2ex]} \fi%
+      \ifx\@author\empty \else
+        {\Large\@author
+          \ifx\@authortitle\empty\else{\large\\\@authortitle}\fi
+          \ifx\@email\empty\else{\normalsize\\\@email}\fi
+          \\[1ex]}%
+      \fi%
+      \ifx\@docversion\empty\else\@docversion\\\fi
       \ifx\@date\empty \else\@date \\\fi%
       \vspace{5ex}%
     \end{center}%
