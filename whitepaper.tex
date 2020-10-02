@@ -88,23 +88,15 @@
 
   \newcommand{\gernot}[1]{\Comment{#1 \colorbox{yellow}{[gernot]}}}
 
-\ifhyperlinks
-  \usepackage[pdftex,pagebackref,hyperindex,bookmarks]{hyperref}
-  % default no frames around links, dark versions so it prints Ok.
-  \hypersetup{colorlinks,
-    	              allcolors=neutral,
-                      anchorcolor=black,
-                      citecolor=greenDark,
-                      linkcolor=greenDark,
+  \hypersetup{pdftex,
+                      pagebackref,
+                      hyperindex,
+                      bookmarks,
                       pdftitle={The seL4 Microkernel -- An Introduction},
                       pdfauthor={Gernot Heiser},
                       pdfsubject={seL4 Foundation Whitepaper Revision 1.1},
                       pdfkeywords={seL4, microkernel, performance},
                       pdfdisplaydoctitle=true}
-\else
-  \providecommand{\href}[2]{\url{#2}}
-\fi
-
 
 \begin{document}
 
