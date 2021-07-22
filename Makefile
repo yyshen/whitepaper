@@ -27,7 +27,7 @@ LaTeXEnv   = TEXINPUTS=".:/home/disy/lib/TeX:/home/disy/lib/ps:${TEXINPUTS}:"
 BibTexEnv  = BIBINPUTS=".:${BIBDIR}:${BIBINPUTS}:"
 BibFiles   = defs,extra,combined,systems,fm,other
 
-LaTeX      = ${LaTeXEnv} pdflatex -interaction=nonstopmode
+LaTeX      = ${LaTeXEnv} xelatex -interaction=nonstopmode
 # Uncomment the following for "unsw" when using TrueType fonts (which they require)
 #LaTeX      = ${LaTeXEnv} lualatex -interaction=nonstopmode
 LaTeXdiff  = ./tools/latexdiff
@@ -55,7 +55,7 @@ ToGray	   = convert -colorspace gray
 # To add a further target, simply append the basename of the .tex file here
 # NOTE: for the "simple", "report" and "unsw" templates, uncomment the lualatex line above!
 TexFiles = $(basename $(wildcard *.tex))
-Targets    = whitepaper
+Targets    = whitepaper whitepaper_CN
 
 
 # CONFIGURATION OPTIONS
